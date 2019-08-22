@@ -1,12 +1,28 @@
 package com.example.myapplication;
 
 public class Contacto {
+    int idcontacto;
     String nombre,cel,correo;
 
     public Contacto(String nombre, String cel, String correo) {
         this.nombre = nombre;
         this.cel = cel;
         this.correo = correo;
+    }
+
+    public Contacto(int idcontacto, String nombre, String cel, String correo) {
+        this.idcontacto = idcontacto;
+        this.nombre = nombre;
+        this.cel = cel;
+        this.correo = correo;
+    }
+
+    public int getIdcontacto() {
+        return idcontacto;
+    }
+
+    public void setIdcontacto(int idcontacto) {
+        this.idcontacto = idcontacto;
     }
 
     public String getNombre() {
