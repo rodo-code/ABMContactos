@@ -24,7 +24,6 @@ public class ContactoDAOSQLite extends SQLiteOpenHelper implements ContactoDAO {
                     "celular TEXT," +
                     "correo TEXT);";
             db.execSQL(sql);
-
     }
 
     @Override
@@ -68,7 +67,7 @@ public class ContactoDAOSQLite extends SQLiteOpenHelper implements ContactoDAO {
     @Override
     public void baja(int id) {
         SQLiteDatabase db=this.getWritableDatabase();
-        db.delete("contacto","id = ?",new String[]{String.valueOf(id)});
+        db.delete("contacto","idcontacto = ?",new String[]{String.valueOf(id)});
 
     }
 
