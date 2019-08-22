@@ -29,13 +29,24 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         sqlite = new ContactoDAOSQLite(this,"dbcontacto",null,1);
         lista = new ArrayList<>();
+
         recyclerView = (RecyclerView)findViewById(R.id.rvContenedor);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        AdaptadorContacto adaptador = new AdaptadorContacto(lista,this,sqlite);
-        recyclerView.setAdapter(adaptador);
+
+        if (lista.size()==0)
+        {
+            lista=sqlite.listarTodos();
+
+            AdaptadorContacto adaptador = new AdaptadorContacto(lista,this,sqlite);
+            recyclerView.setAdapter(adaptador);
+        }else{
+            Toast.makeText(this,"Sin contactos ",Toast.LENGTH_LONG).show();
+        }
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
