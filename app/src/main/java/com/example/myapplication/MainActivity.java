@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -36,16 +37,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = (RecyclerView)findViewById(R.id.rvContenedor);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-
-        if (lista.size()==0)
-        {
             lista=sqlite.listarTodos();
 
-            AdaptadorContacto adaptador = new AdaptadorContacto(lista,this,sqlite);
-            recyclerView.setAdapter(adaptador);
-        }else{
-            Toast.makeText(this,"Sin contactos ",Toast.LENGTH_LONG).show();
-        }
+            if(lista.size()>0){
+                AdaptadorContacto adaptador = new AdaptadorContacto(lista,this,sqlite);
+                recyclerView.setAdapter(adaptador);
+
+            }else{
+                Toast.makeText(this, "Sin contactos", Toast.LENGTH_LONG).show();
+
+            }
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 String cor=correo.getText().toString();
                 Contacto agenda=new Contacto(nom,tel,cor);
                 sqlite.alta(agenda);
-                lista = sqlite.listarTodos();
+                Intent i=new Intent(MainActivity.this, MainActivity.class);
+                finish();
+                startActivity(i);
                 Toast.makeText(getApplicationContext(),"El contacto se guardo correctamente",Toast.LENGTH_LONG).show();
             }
         });
