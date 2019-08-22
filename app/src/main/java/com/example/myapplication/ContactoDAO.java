@@ -10,22 +10,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class ContactoDAO {
-    private ArrayList<Contacto> lista;
-    public ContactoDAO(ArrayList<Contacto> lista) {
-        this.lista = lista;
-    }
-    public ArrayList<Contacto> getLista() {
-        return lista;
-    }
+public interface ContactoDAO extends ABM<Contacto>{
 
-    public void agregarContacto(Contacto contacto){
-        lista.add(contacto);
-    }
-    public  void editarContacto(int i,Contacto contacto){
-        lista.set(i,contacto);
-    }
-    public  void eliminarContacto(int i){
-        lista.remove(i);
-    }
+
 }
