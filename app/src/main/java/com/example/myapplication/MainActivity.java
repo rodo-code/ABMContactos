@@ -17,21 +17,24 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Contacto> lista;
+    List<Contacto> lista;
     RecyclerView recyclerView;
+    ContactoDAO sqlite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        sqlite = new ContactoDAOSQLite(this,"dbcontacto",null,1);
         lista = new ArrayList<>();
         recyclerView = (RecyclerView)findViewById(R.id.rvContenedor);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        AdaptadorContacto adaptador = new AdaptadorContacto(lista,this);
+        AdaptadorContacto adaptador = new AdaptadorContacto(lista,this,sqlite);
         recyclerView.setAdapter(adaptador);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -60,9 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 String tel=telefono.getText().toString();
                 String cor=correo.getText().toString();
                 Contacto agenda=new Contacto(nom,tel,cor);
-                ContactoDAO contactoDAO = new ContactoDAO(lista);
-                contactoDAO.agregarContacto(new Contacto(nom,tel,cor));
-                lista = contactoDAO.getLista();
+                sqlite.alta(agenda);
+                lista = sqlite.listarTodos();
                 Toast.makeText(getApplicationContext(),"El contacto se guardo correctamente",Toast.LENGTH_LONG).show();
             }
         });

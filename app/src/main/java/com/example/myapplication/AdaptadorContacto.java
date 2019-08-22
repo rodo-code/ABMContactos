@@ -19,11 +19,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdaptadorContacto extends RecyclerView.Adapter<AdaptadorContacto.ViewHolderDatos> {
-    ArrayList<Contacto> lista;
+    List<Contacto> lista;
     Context context;
-    public AdaptadorContacto(ArrayList<Contacto> lista,Context context) {
+    ContactoDAO contactoDAO;
+    public AdaptadorContacto(List<Contacto> lista,Context context,ContactoDAO contactoDAO) {
         this.lista = lista;
         this.context = context;
+        this.contactoDAO = contactoDAO;
     }
 
     @NonNull
@@ -37,9 +39,9 @@ public class AdaptadorContacto extends RecyclerView.Adapter<AdaptadorContacto.Vi
     public void onBindViewHolder(@NonNull final ViewHolderDatos
                                              viewHolderDatos, final int i) {
 
-        viewHolderDatos.tvnombre.setText(lista.get(i).nombre);
-        viewHolderDatos.tvcel.setText(lista.get(i).cel);
-        viewHolderDatos.tvcorreo.setText(lista.get(i).correo);
+        viewHolderDatos.tvnombre.setText(lista.get(i).getNombre());
+        viewHolderDatos.tvcel.setText(lista.get(i).getCel());
+        viewHolderDatos.tvcorreo.setText(lista.get(i).getCorreo());
         viewHolderDatos.fila.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,28 +56,26 @@ public class AdaptadorContacto extends RecyclerView.Adapter<AdaptadorContacto.Vi
                 builder.setView(subview);
                 builder.setCancelable(false);
                 builder.create();
-                nombre.setText(lista.get(i).nombre,TextView.BufferType.EDITABLE);
-                telefono.setText(lista.get(i).cel,TextView.BufferType.EDITABLE);
-                correo.setText(lista.get(i).correo,TextView.BufferType.EDITABLE);
+                nombre.setText(lista.get(i).getNombre(),TextView.BufferType.EDITABLE);
+                telefono.setText(lista.get(i).getCel(),TextView.BufferType.EDITABLE);
+                correo.setText(lista.get(i).getCorreo(),TextView.BufferType.EDITABLE);
                 builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ContactoDAO contactoDAO = new ContactoDAO(lista);
                         String nom=nombre.getText().toString();
                         String tel=telefono.getText().toString();
                         String cor=correo.getText().toString();
-                        Contacto contacto=new Contacto(nom,tel,cor);
-                        contactoDAO.editarContacto(i,contacto);
-                        lista = contactoDAO.getLista();
+                        Contacto contacto=new Contacto(lista.get(i).getIdcontacto(),nom,tel,cor);
+                        contactoDAO.modificacion(contacto);
+                        lista = contactoDAO.listarTodos();
                         notifyDataSetChanged();
                     }
                 });
                 builder.setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ContactoDAO contactoDAO = new ContactoDAO(lista);
-                        contactoDAO.eliminarContacto(i);
-                        lista = contactoDAO.getLista();
+                        contactoDAO.baja(lista.get(i).getIdcontacto());
+                        lista = contactoDAO.listarTodos();
                         notifyDataSetChanged();
                     }
                 });

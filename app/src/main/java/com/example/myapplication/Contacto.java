@@ -1,8 +1,8 @@
 package com.example.myapplication;
 
 public class Contacto {
-    int idcontacto;
-    String nombre,cel,correo;
+    private int idcontacto;
+    private String nombre,cel,correo;
 
     public Contacto(String nombre, String cel, String correo) {
         this.nombre = nombre;
