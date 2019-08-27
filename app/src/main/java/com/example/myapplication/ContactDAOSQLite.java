@@ -2,7 +2,6 @@ package com.example.myapplication;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,9 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactoDAOSQLite extends SQLiteOpenHelper implements ContactoDAO {
+public class ContactDAOSQLite extends SQLiteOpenHelper implements ContactDAO {
 
-    public ContactoDAOSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public ContactDAOSQLite(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
@@ -34,10 +33,10 @@ public class ContactoDAOSQLite extends SQLiteOpenHelper implements ContactoDAO {
     }
 
     @Override
-    public List<Contacto> listarTodos() {
+    public List<Contacto> listrTodos() {
         String sql="select * from contacto";
         SQLiteDatabase db=this.getReadableDatabase();
-        List<Contacto> listaContactos=new ArrayList<>();
+        List<Contacto> listContactos=new ArrayList<>();
 
         Cursor cursor=db.rawQuery(sql,null);
         if (cursor.moveToFirst()){
@@ -47,11 +46,11 @@ public class ContactoDAOSQLite extends SQLiteOpenHelper implements ContactoDAO {
                 String nombre=cursor.getString(1);
                 String celular=cursor.getString(2);
                 String correo=cursor.getString(3);
-                listaContactos.add(new Contacto(id,nombre,celular,correo));
+                listContactos.add(new Contacto(id,nombre,celular,correo));
             }while(cursor.moveToNext());
         }
         cursor.close();
-        return listaContactos;
+        return listContactos;
     }
 
     @Override

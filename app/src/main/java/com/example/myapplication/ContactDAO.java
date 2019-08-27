@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public interface ContactoDAO extends ABM<Contacto>{
+public interface ContactDAO extends ABM<Contacto>{
 
 
 }

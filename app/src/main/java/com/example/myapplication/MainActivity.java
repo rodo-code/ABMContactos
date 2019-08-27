@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,8 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    List<Contacto> lista;
+    List<Contacto> list;
     RecyclerView recyclerView;
-    ContactoDAO sqlite;
+    ContactDAO sqlite;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,16 +28,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        sqlite = new ContactoDAOSQLite(this,"dbcontacto",null,1);
-        lista = new ArrayList<>();
+        sqlite = new ContactDAOSQLite(this,"dbcontacto",null,1);
+        list = new ArrayList<>();
 
         recyclerView = (RecyclerView)findViewById(R.id.rvContenedor);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-            lista=sqlite.listarTodos();
+            list=sqlite.listrTodos();
 
-            if(lista.size()>0){
-                AdaptadorContacto adaptador = new AdaptadorContacto(lista,this,sqlite);
+            if(list.size()>0){
+                AdaptadorContacto adaptador = new AdaptadorContacto(list,this,sqlite);
                 recyclerView.setAdapter(adaptador);
 
             }else{
@@ -75,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 String tel=telefono.getText().toString();
                 String cor=correo.getText().toString();
                 Contacto agenda=new Contacto(nom,tel,cor);
-                lista.add(agenda);
+                list.add(agenda);
                 sqlite.alta(agenda);
                 Intent i = new Intent(MainActivity.this, MainActivity.class);
                 finish();

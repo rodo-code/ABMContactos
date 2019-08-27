@@ -8,24 +8,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdaptadorContacto extends RecyclerView.Adapter<AdaptadorContacto.ViewHolderDatos> {
-    List<Contacto> lista;
+    List<Contacto> list;
     Context context;
-    ContactoDAO contactoDAO;
-    public AdaptadorContacto(List<Contacto> lista,Context context,ContactoDAO contactoDAO) {
-        this.lista = lista;
+    ContactDAO ContactDAO;
+    public AdaptadorContacto(List<Contacto> list, Context context, com.example.myapplication.ContactDAO contactDAO) {
+        this.list = list;
         this.context = context;
-        this.contactoDAO = contactoDAO;
+        this.ContactDAO = contactDAO;
     }
 
     @NonNull
@@ -39,9 +35,9 @@ public class AdaptadorContacto extends RecyclerView.Adapter<AdaptadorContacto.Vi
     public void onBindViewHolder(@NonNull final ViewHolderDatos
                                              viewHolderDatos, final int i) {
 
-        viewHolderDatos.tvnombre.setText(lista.get(i).getNombre());
-        viewHolderDatos.tvcel.setText(lista.get(i).getCel());
-        viewHolderDatos.tvcorreo.setText(lista.get(i).getCorreo());
+        viewHolderDatos.tvnombre.setText(list.get(i).getNombre());
+        viewHolderDatos.tvcel.setText(list.get(i).getCel());
+        viewHolderDatos.tvcorreo.setText(list.get(i).getCorreo());
         viewHolderDatos.fila.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,26 +52,26 @@ public class AdaptadorContacto extends RecyclerView.Adapter<AdaptadorContacto.Vi
                 builder.setView(subview);
                 builder.setCancelable(false);
                 builder.create();
-                nombre.setText(lista.get(i).getNombre(),TextView.BufferType.EDITABLE);
-                telefono.setText(lista.get(i).getCel(),TextView.BufferType.EDITABLE);
-                correo.setText(lista.get(i).getCorreo(),TextView.BufferType.EDITABLE);
+                nombre.setText(list.get(i).getNombre(),TextView.BufferType.EDITABLE);
+                telefono.setText(list.get(i).getCel(),TextView.BufferType.EDITABLE);
+                correo.setText(list.get(i).getCorreo(),TextView.BufferType.EDITABLE);
                 builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String nom=nombre.getText().toString();
                         String tel=telefono.getText().toString();
                         String cor=correo.getText().toString();
-                        Contacto contacto=new Contacto(lista.get(i).getIdcontacto(),nom,tel,cor);
-                        contactoDAO.modificacion(contacto);
-                        lista = contactoDAO.listarTodos();
+                        Contacto contacto=new Contacto(list.get(i).getIdcontacto(),nom,tel,cor);
+                        ContactDAO.modificacion(contacto);
+                        list = ContactDAO.listrTodos();
                         notifyDataSetChanged();
                     }
                 });
                 builder.setNegativeButton("Eliminar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        contactoDAO.baja(lista.get(i).getIdcontacto());
-                        lista = contactoDAO.listarTodos();
+                        ContactDAO.baja(list.get(i).getIdcontacto());
+                        list = ContactDAO.listrTodos();
                         notifyDataSetChanged();
                     }
                 });
@@ -92,7 +88,7 @@ public class AdaptadorContacto extends RecyclerView.Adapter<AdaptadorContacto.Vi
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        return list.size();
     }
 
 
