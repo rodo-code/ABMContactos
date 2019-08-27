@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
                 Contacto agenda=new Contacto(nom,tel,cor);
                 lista.add(agenda);
                 sqlite.alta(agenda);
+                Intent i = new Intent(MainActivity.this, MainActivity.class);
+                finish();
+                startActivity(i);
                 Toast.makeText(getApplicationContext(),"El contacto se guardo correctamente",Toast.LENGTH_LONG).show();
             }
         });
