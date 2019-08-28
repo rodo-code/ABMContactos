@@ -4,6 +4,10 @@ public class Contacto {
     private int idcontacto;
     private String nombre,cel,correo;
 
+    public Contacto (){
+
+    }
+
     public Contacto(String nombre, String cel, String correo) {
         this.nombre = nombre;
         this.cel = cel;

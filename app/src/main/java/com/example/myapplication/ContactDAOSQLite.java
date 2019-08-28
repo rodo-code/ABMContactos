@@ -15,6 +15,8 @@ public class ContactDAOSQLite extends SQLiteOpenHelper implements ContactDAO {
         super(context, name, factory, version);
     }
 
+    //Creacion de la tabla de contactos para la base de datos
+
     @Override
     public void onCreate(SQLiteDatabase db) {
             String sql="CREATE TABLE contacto(" +
@@ -25,12 +27,16 @@ public class ContactDAOSQLite extends SQLiteOpenHelper implements ContactDAO {
             db.execSQL(sql);
     }
 
+    //En caso de ya existir la tabla se hace un drop de la segunda en creacion
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS contacto");
         onCreate(db);
     }
+
+    //Obtener la lista de los contactos guardados
 
     @Override
     public List<Contacto> listrTodos() {
@@ -53,6 +59,8 @@ public class ContactDAOSQLite extends SQLiteOpenHelper implements ContactDAO {
         return listContactos;
     }
 
+    //Guardar un contacto en la base de datos
+
     @Override
     public void alta(Contacto contacto) {
         ContentValues values=new ContentValues();
@@ -63,16 +71,18 @@ public class ContactDAOSQLite extends SQLiteOpenHelper implements ContactDAO {
         database.insert("contacto",null,values);
     }
 
+    //Borrar un contacto de la base de datos
+
     @Override
     public void baja(int id) {
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete("contacto","idcontacto = ?",new String[]{String.valueOf(id)});
-
     }
+
+    //Modificar un contacto existente en la base de datos
 
     @Override
     public void modificacion(Contacto contacto) {
-
         ContentValues values=new ContentValues();
         values.put("nombre",contacto.getNombre());
         values.put("celular",contacto.getCel());

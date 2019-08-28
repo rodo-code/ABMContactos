@@ -18,9 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Variables para la lista de contactos y la base de datos
+
     List<Contacto> list;
     RecyclerView recyclerView;
     ContactDAO sqlite;
+
+    //Inicializacion de la aplicación y enlace con el xml activity_main.xml
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         sqlite = new ContactDAOSQLite(this,"dbcontacto",null,1);
         list = new ArrayList<>();
+
+        //Creacion del reciclerView
 
         recyclerView = (RecyclerView)findViewById(R.id.rvContenedor);
         recyclerView.setHasFixedSize(true);
@@ -53,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    //AlertDialog para la creacion de un contacto
+
     private void interfazAgregarContacto(){
         LayoutInflater inflater=LayoutInflater.from(this);
         View subview=inflater.inflate(R.layout.agregardatos,null);
