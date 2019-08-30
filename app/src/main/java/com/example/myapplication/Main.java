@@ -15,6 +15,14 @@ class Main{
 		}
 		return fibo(n-1)+fibo(n-2);
 	}
+	
+	public static int factorial(int n){
+		if(n>1){
+			return factorial(n-1)*n;
+		}
+		return 1;
+	}
+	
 	public static void main(String[] args){
 		fibo(5);
 	}
