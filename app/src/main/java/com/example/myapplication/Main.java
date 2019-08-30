@@ -9,7 +9,7 @@ class Main{
 	return true;
 	}
 
-	int fibo(int n){
+	public static int fibo(int n){
 		if(n==0 or n==1){
 			return 1;
 		}
@@ -25,6 +25,8 @@ class Main{
 	
 	public static void main(String[] args){
 		fibo(5);
+		primo(5);
+		factorial(5);
 	}
 }
 
