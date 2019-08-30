@@ -1,6 +1,6 @@
 class Main{
 	
-	public static bool primo(int numero){
+	public static boolean primo(int numero){
 
 	if(numero==1) return false;	
 	for(int i=2;i<numero;i++){
